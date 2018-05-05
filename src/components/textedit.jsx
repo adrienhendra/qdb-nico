@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 /* Semantic UI */
-import { Button } from "semantic-ui-react";
-import "semantic-ui-css/semantic.min.css";
+import { Segment, Input, Button } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 /* React Quill */
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import "react-quill/dist/quill.bubble.css";
 
 /*
@@ -16,40 +16,35 @@ import "react-quill/dist/quill.snow.css";
 class TextEdit extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" }; // You can also pass a Quill Delta here
+    this.state = { text: '' }; // You can also pass a Quill Delta here
     this.handleChange = this.handleChange.bind(this);
 
     /* React Quill setup */
     this.modules = {
       formula: true,
       toolbar: [
-        [{ header: [1, 2, false] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" }
-        ],
-        ["link", "image"],
-        ["clean"],
-        ["formula"]
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+        ['link', 'image'],
+        ['clean'],
+        ['formula']
       ]
     };
 
     /* React Quill formats */
     this.formats = [
-      "header",
-      "bold",
-      "italic",
-      "underline",
-      "strike",
-      "blockquote",
-      "list",
-      "bullet",
-      "indent",
-      "link",
-      "image"
+      'header',
+      'bold',
+      'italic',
+      'underline',
+      'strike',
+      'blockquote',
+      'list',
+      'bullet',
+      'indent',
+      'link',
+      'image'
     ];
   }
 
@@ -58,8 +53,10 @@ class TextEdit extends Component {
   }
 
   render() {
+    let temp_label = this.props.label;
     return (
-      <div>
+      <Segment>
+        <p>{temp_label}</p>
         <ReactQuill
           theme="snow"
           readOnly={false}
@@ -67,10 +64,14 @@ class TextEdit extends Component {
           modules={this.modules}
           onChange={this.handleChange}
         />
+        <br />
+        <Input label="Question Tag" placeholder="None" readOnly={false} />
+        <br />
+        <br />
         <Button content="Save" />
         <Button content="Reset" />
         <Button content="Cancel" />
-      </div>
+      </Segment>
     );
   }
 }

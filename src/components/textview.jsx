@@ -1,12 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 /* Semantic UI */
-import { Button } from "semantic-ui-react";
-import "semantic-ui-css/semantic.min.css";
+import { Modal, Segment, Input, Button } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 /* React Quill */
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+/* Text Edit */
+import { TextEdit } from './textedit';
 
 /*
  * This contains view only text box with label and update button.
@@ -15,13 +18,14 @@ import "react-quill/dist/quill.snow.css";
 class TextView extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" }; // You can also pass a Quill Delta here
+    this.state = { text: '' }; // You can also pass a Quill Delta here
     this.handleChange = this.handleChange.bind(this);
+    this.updateEvent = this.updateEvent.bind(this);
 
     /* React Quill setup */
     this.modules = {
       formula: true,
-      toolbar: []
+      toolbar: false
     };
 
     /* React Quill formats */
@@ -32,9 +36,16 @@ class TextView extends Component {
     this.setState({ text: value });
   }
 
+  updateEvent() {
+    console.log('Test click');
+  }
+
   render() {
+    let temp_label = this.props.label + ' ';
     return (
-      <div>
+      <Segment>
+        <p>{temp_label}</p>
+        <br />
         <ReactQuill
           theme="snow"
           readOnly={true}
@@ -42,10 +53,19 @@ class TextView extends Component {
           modules={this.modules}
           onChange={this.handleChange}
         />
-        <Button content="Save" />
-        <Button content="Reset" />
-        <Button content="Cancel" />
-      </div>
+        <br />
+        <Input label="Question Tag" placeholder="None" readOnly={true} />
+        <br />
+        <br />
+        <Modal
+          trigger={<Button circular size="tiny" icon="configure" content="Update" onClick={this.updateEvent} />}
+          size="fullscreen">
+          <Modal.Header content="Edit question" />
+          <Modal.Content image>
+            <TextEdit label="world" />
+          </Modal.Content>
+        </Modal>
+      </Segment>
     );
   }
 }

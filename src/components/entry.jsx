@@ -9,7 +9,5 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 class Entry extends Component {
-    constructor() {
-
-    }
+  constructor() {}
 }
