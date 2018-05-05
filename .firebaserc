@@ -1,5 +1,6 @@
 {
   "projects": {
-    "staging": "quest-d946c"
+    "staging": "quest-d946c",
+    "default": "quest-d946c"
   }
 }
