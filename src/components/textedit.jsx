@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /* Semantic UI */
-import { Segment, Input, Button } from 'semantic-ui-react';
+import { Segment, Input, Button, Rating, Label } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 /* React Quill */
@@ -16,8 +16,15 @@ import 'react-quill/dist/quill.snow.css';
 class TextEdit extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' }; // You can also pass a Quill Delta here
+    this.state = {
+      text: '', // You can also pass a Quill Delta here
+      data: {
+        rating: 0,
+        lastUpdate: 'unknown'
+      }
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.handleOnRate = this.handleOnRate.bind(this);
 
     /* React Quill setup */
     this.modules = {
@@ -48,6 +55,15 @@ class TextEdit extends Component {
     ];
   }
 
+  handleOnRate(ev, { rating, maxRating }) {
+    console.log(`Rating: ${rating}, maxRating: ${maxRating}`);
+    let timestamp = new Date();
+    let new_state = Object.assign({}, this.state);
+    new_state.data.rating = rating;
+    new_state.data.lastUpdate = timestamp.toISOString();
+    this.setState(new_state);
+  }
+
   handleChange(value) {
     this.setState({ text: value });
   }
@@ -57,6 +73,15 @@ class TextEdit extends Component {
     return (
       <Segment>
         <p>{temp_label}</p>
+        <Input label="Category" placeholder="None" readOnly={false} />
+        <br />
+        <br />
+        <Input label="Sub-category" placeholder="None" readOnly={false} />
+        <br />
+        <br />
+        <Rating maxRating={10} disabled={false} onRate={this.handleOnRate} />
+        <br />
+        <br />
         <ReactQuill
           theme="snow"
           readOnly={false}
